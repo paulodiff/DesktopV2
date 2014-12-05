@@ -1,0 +1,64 @@
+<div class="container">  
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Ricerca ... 
+    </div>
+    <div class="panel-body">
+    
+    <form>
+  <label class="control-label" for="selectbasic">Select Basic
+    <select id="selectbasic" name="selectbasic" class="input-block-level">
+      <option>Option one</option>
+      <option>Option two</option>
+    </select>
+  </label>
+    
+  <input type="text" placeholder="Email">
+
+  <button type="submit" class="btn">Sign in</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="button" class="btn">Cancel</button>    
+</form>
+    </div>
+</div>    
+    
+
+
+<div id="loginbox" style="margin-top:50px;" class="mainbox">                    
+        <div class="panel panel-info" >
+            <div class="panel-heading">
+                <div class="panel-title">TITOLO</div>
+            </div>     
+            <div style="padding-top:30px" class="panel-body" >
+                     
+          <div infinite-scroll='reddit.nextPage()' infinite-scroll-disabled='reddit.busy' infinite-scroll-distance='1'>
+
+<table class="table table-hover" id="dev-table">    
+    <thead>
+	   <tr>
+		  <th>#</th>
+		  <th>First Name</th>
+		  <th>Last Name</th>
+		  <th>Username</th>
+		</tr>
+	</thead>
+    <tbody>
+        <tr ng-repeat='item in reddit.items'>
+          <td>{{item.id_servizi}}</td>
+          <td>{{item.nome_breve_utenti}}</td>
+          <td>{{item.login_utenti}}</td>
+          <td>{{item.note_volontari}}</td>
+        </tr>
+  </tbody>
+</table>
+    <div ng-show='reddit.busy'>Loading data...</div>
+    
+</div>  
+               
+            </div>                     
+        </div>  
+        </div>
+</div>
+
+

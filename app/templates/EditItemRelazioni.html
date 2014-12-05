@@ -1,0 +1,118 @@
+<div class="container">
+<div  class="panel panel-success">
+
+    <div ng-show="configAction == 'edit'"  class="panel-heading"><h3 class="panel-title">Modifica Relazione di Servizio : {{item.id}}</h3></div>
+    <div ng-show="configAction == 'new'"  class="panel-heading"><h3 class="panel-title">Creazione nuova Relazione di Servizio</h3></div>
+    <div ng-show="configAction == 'view'"  class="panel-heading"><h3 class="panel-title">Visualizzazione  Relazione di Servizio : {{item.id}}</h3></div>
+    
+    <div class="panel-body">
+
+<form class="form-horizontal">
+    
+<fieldset>
+
+<!-- Form Name -->
+<!-- <div ng-show="configAction == 'view'"> -->
+<div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="textinput">Id preventivo</label>
+      <div class="col-sm-10">
+        <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control" ng-model="item.id_servizi" ng-readonly="true" ng-disabled="configAction == 'edit'">
+      </div>
+    </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label" for="textinput">Associazione</label>
+  <div class="col-sm-10">
+  <select ng-model="item.id_utenti" class="form-control" ng-options="i.id_utenti as i.nome_breve_utenti for i in utentiList" ng-disabled="configAction == 'edit'"></select>    
+  </div>
+</div>
+
+
+<div class="form-group">    
+  <label class="col-sm-2 control-label" for="textinput">Volontari</label>
+  <div class="col-sm-10">
+    <select ui-select2 multiple="multiple" ng-model="item.lista_volontari_relazioni" data-placeholder="Selezionare i volontari" style="width:400px;" ng-disabled="configAction == 'edit'" >
+        <option ng-repeat="a in volontariList" value="{{a.id}}">{{a.nome_completo_volontari}}</option>
+    </select>
+    </div>
+</div>
+    
+
+    
+
+<div class="form-group">
+  <label class="col-sm-2 control-label" for="textinput">Data</label>
+    <div class="col-sm-10">
+        <input type="text" class="col-sm-10 form-control"  
+               datepicker-popup="dd/MM/yyyy" 
+               ng-model="item.data_relazioni" 
+               is-open="openedPopupDate" 
+               ng-click="popupDate($event)"
+               ng-required="true" close-text="Close" ng-disabled="configAction == 'edit'"/>
+    </div>
+</div>
+    
+    
+<div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Dalle ore</label>
+    <div class="col-sm-2">
+        <input type="time"  class="col-sm-2  form-control" id="exampleInput" name="input" ng-model="item.da_ora_relazioni"   ng-change="timechanged()"  placeholder="HH:mm" min="00:00" max="23:30" required novalidate ng-disabled="configAction == 'edit'"/>
+    </div>
+    <label class="col-sm-2 control-label" for="textinput">alle ore</label>
+    <div class="col-sm-2">
+        <input type="time"  class="col-sm-2  form-control" id="exampleInput" name="input" ng-model="item.a_ora_relazioni"  ng-change="timechanged()"  placeholder="HH:mm" min="00:00" max="23:30" required novalidate ng-disabled="configAction == 'edit'"/>
+    </div>
+    <label class="col-sm-1 control-label">{{timeCalculated}}</label>
+</div>
+        
+
+<div class="form-group">
+  <label class="col-sm-2 control-label" for="textinput">Rapporto</label>
+  <div class="col-sm-10">
+    <textarea class="form-control" ng-model="item.rapporto_relazioni" rows="3" ng-disabled="configAction == 'edit'"></textarea>
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label" for="textinput">Auto</label>
+  <div class="col-sm-10">
+    <textarea class="form-control" ng-model="item.auto_relazioni" rows="3" ng-disabled="configAction == 'edit'"></textarea>
+  </div>
+</div>    
+  
+
+<div class="form-group">
+  <label class="col-sm-2 control-label" for="textinput">Note</label>
+  <div class="col-sm-10">
+    <textarea class="form-control" ng-model="item.note_relazioni" rows="3" ng-disabled="configAction == 'edit'"></textarea>
+  </div>
+</div>
+
+    
+    
+    
+<!-- Button (Double) -->
+<div class="form-group">
+  <label class="col-sm-2 control-label" for="button1id">Azioni</label>
+  <div class="col-sm-10">
+    <button ng-show="configAction == 'new'" id="salvabutton"  ng-click="save_action(item)"   name="singlebutton" class="btn btn-primary">Salva Elemento</button>
+    <button ng-show="(configAction == 'edit') && (id_rapporto_valido_servizio == null) && (item.annullato_relazioni == 0)" id="cancelbutton" ng-click="cancel_action(item)" name="button2id"    class="btn btn-danger">Annulla Elemento</button>
+    <button ng-show="(configAction == 'edit') && (id_rapporto_valido_servizio == null) && (item.annullato_relazioni == 0)" id="cancelbutton" ng-click="print_action(item)" name="button2id"    class="btn btn-primary">Stampa Elemento</button>  
+    <button ng-show="(item.annullato_relazioni == 1)" id="cancelbutton" name="button2id"    class="btn btn-danger">Elemento ANNULLATO - nessuna operazione possibile</button>
+  </div>
+</div>
+    
+
+</fieldset>
+    
+  <!-- <pre>form = {{item | json}}</pre>  -->
+  <!-- <pre>master = {{master | json}}</pre> -->
+  <!-- <pre>timeCalculated = {{ timeCalculated| json}}</pre>  -->
+</form>
+
+        
+      </div> <!-- panel body -->
+</div>
+</div>

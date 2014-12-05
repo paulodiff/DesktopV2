@@ -1,0 +1,7 @@
+{
+    "jscodehints.detectedExclusions": [
+        "D:/tmp001/SENCHA/DesktopV2/app/lib/jquery/src/outro.js",
+        "D:/tmp001/SENCHA/DesktopV2/app/lib/restangular/test/restangularSpec.js",
+        "D:/tmp001/SENCHA/DesktopV2/app/lib/restangular/src/restangular.js"
+    ]
+}

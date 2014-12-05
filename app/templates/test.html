@@ -1,0 +1,112 @@
+<div class="container">
+ <div class="panel panel-info">  
+  <div class="panel-heading">
+      <h3 class="panel-title">Opzioni di ricerca</h3>
+  </div>
+     <div class="panel-body">
+  <form class="form-inline">
+   <div class="controls">
+    <label class="control-label" for="textinput">Associazione:</label>
+       
+       <select 
+            class="form-control" 
+            ng-model="id_utenti_selezione" 
+            ng-options="i.id_utenti as i.nome_breve_utenti for i in utentiList">
+       </select>    
+    <label class="control-label" for="textinput">Data:</label>
+    <input type="text" 
+           class="form-control" 
+           datepicker-popup="dd/MM/yyyy" 
+           ng-model="data_servizi_selezione" 
+           is-open="openedPopupDate" 
+           ng-required="true" 
+           ng-click="popupDate($event)"
+           close-text="Close" />
+    
+    <button type="submit" class="btn">Filtra!</button>
+  </div>
+  </form>
+</div>
+</div>
+</div>
+
+<div class="container">
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Elenco servizi</h3>
+    </div>
+    <div class="panel-body">
+
+
+<table class="table table-hover" id="dev-table">    
+    <thead>
+	   <tr>
+		  <th>#id</th>
+		  <th class="hidden-xs hidden-sm">Associazione</th>
+		  <th>Volontario</th>
+		  <th>Data</th>
+		  <th>Dalle ore</th>
+          <th>Alle ore</th>
+		</tr>
+	</thead>
+    <tbody>
+        <tr ng-repeat='item in items'
+            ng-class="{'danger' : item.annullato_servizi == 1 }">
+            
+          <td ng-show="item.annullato_servizi">-</td>
+          <td ng-show="!item.annullato_servizi"><a ng-click="editItem(item.id_servizi)">{{item.id_servizi}}</a></td>
+          <td class="hidden-xs hidden-sm">{{item.nome_breve_utenti}}</td>
+          <td>{{item.cognome_volontari}}  {{item.nome_volontari}} </td>
+          <td>{{item.data_servizi | date:'dd/MM/yyyy' }}</td>
+          <td>{{item.da_ora_servizi | date:'HH:mm' }}</td>
+          <td>{{item.a_ora_servizi | date:'HH:mm' }}</td>
+            
+        </tr>
+  </tbody>
+</table>
+
+<div ng-show="totalItems == 0">
+  <h3>Nessun dato trovato, cambiare i dati di ricerca.</h3>
+</div>
+        
+
+   
+        <pagination 
+            ng-model="currentPage" 
+            total-items="totalItems" 
+            items-per-page="pageSize"
+            ng-change="selectPage()"></pagination>
+      </div> <!-- panel body -->
+</div> <!-- panel panel panel-primary  -->
+</div>  <!-- container  -->
+
+
+
+<hr>
+
+
+<script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I'm a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{ item }}</a>
+                </li>
+            </ul>
+            Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <button class="btn btn-default" ng-click="open()">Open me!</button>
+    <button class="btn btn-default" ng-click="open('lg')">Large modal</button>
+    <button class="btn btn-default" ng-click="open('sm')">Small modal</button>
+    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+
+        
+        

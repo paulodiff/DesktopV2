@@ -1,0 +1,97 @@
+
+<!-- LOGIN FORM-->
+<div class="container">    
+            <h1 style="margin-left:10px;"><img style="width : 50px" src="images/cocca-mini.png"/>Provincia di Rimini</h1>
+        <div id="infobox" style="margin-top:20px;" class="mainbox col-md-8 hidden-xs">
+            <div class="panel panel-success"> 
+               
+            <div class="panel-heading">
+                        <h3 class="panel-title">Informazioni</h3>
+            </div> 
+            
+                
+            <div class="panel-body">
+
+      <h3>Gestione Servizi Volontari</h3>
+      <h3>Requisiti per il funzionamento</h3>
+      <p>E' richiesto il browser (al momento)  <a href="http://www.google.com/intl/it_IT/chrome/browser/">Google Chrome</a></p>
+      <p>Per le stampe è necessario  <a href="http://www.adobe.com/it/products/reader.html">Acrobat Reader</a></p>
+      <h3>Contatti</h3>
+      <p>Telefono: ********  Email: *********</p>
+        
+            <h3>Modelli</h3>
+            <li><p>Modello Relazione Servizio <a href="docs/modellorelazioneservizio.doc">versione doc</a>  - <a href="docs/modellorelazioneservizio.pdf">versione pdf</a></p></li>
+            <li><p>Modello Servizi Preventivi <a href="docs/modelloservizipreventivi.doc">versione doc</a> -  <a href="docs/modelloservizipreventivi.pdf">versione pdf</a></p></li>
+        </div>
+        </div>
+            </div>
+              
+    
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4">                    
+            <div class="panel panel-info" >
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Accesso</h3>
+                        <!-- <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div> -->
+                    </div>     
+
+                    <div ng-if="!currentUser">
+                        
+                    <div style="padding-top:30px" class="panel-body" >
+
+                        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                            
+                        <form id="loginform" class="form-horizontal" role="form" ng-submit="login(credentials)" novalidate>
+                                    
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input id="username" type="text" class="form-control" ng-model="credentials.username" name="username" placeholder="username or email">                                        
+                                    </div>
+                                
+                            <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                        <input id="password" type="password" class="form-control" ng-model="credentials.password" name="password"  placeholder="password">
+                                    </div>
+                                    
+
+                                <div style="margin-top:10px" class="form-group">
+                                    <!-- Button -->
+
+                                    <div class="col-sm-12 controls">
+                                      <button type="submit" id="btn-login" class="btn btn-success btn-block">Login</button>
+                                    </div>
+                                </div>
+
+                            </form>     
+
+
+
+                        </div>   
+                
+                        </div>  <!-- currentuser -->        
+                
+                        <div ng-if="currentUser">
+                            
+                        <div style="padding-top:30px" class="panel-body" >
+                            <form id="loginform" class="form-horizontal" role="form" ng-submit="logout(credentials)" novalidate>
+                                
+                                
+                                <div style="margin-bottom: 25px" class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input id="username" type="text" class="form-control"  name="username" value="{{ currentUser }}">                                        
+                                </div>
+                                
+                                <div style="margin-top:10px" class="form-group">
+                                    <div class="col-sm-12 controls">
+                                      <button type="submit" id="btn-login" class="btn btn-confirm  btn-block">Disconnetti  </button>
+                                    </div>
+                                </div>
+                            </form>     
+                                
+                        </div>
+                
+                    </div>  <!-- currentuser -->
+                </div> <!-- panel-info -->
+        </div> <!-- loginbox -->
+    </div>
+
+    

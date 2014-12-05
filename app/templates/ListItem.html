@@ -1,0 +1,105 @@
+<div class="container">
+ <div class="panel panel-info">  
+  <div class="panel-heading">
+      <h3 class="panel-title">Opzioni di ricerca</h3>
+  </div>
+     <div class="panel-body">
+  <form class="form-inline">
+   <div class="controls">
+    <label class="control-label" for="textinput">Associazione:</label>
+       
+       <select 
+            class="form-control" 
+            ng-model="id_utenti_selezione" 
+            ng-options="i.id_utenti as i.nome_breve_utenti for i in utentiList">
+       </select>    
+    <label class="control-label" for="textinput">Data:</label>
+    <input type="text" 
+           class="form-control" 
+           datepicker-popup="dd/MM/yyyy" 
+           ng-model="data_servizi_selezione" 
+           is-open="openedPopupDate" 
+           ng-required="true" 
+           ng-click="popupDate($event)"
+           close-text="Close" />
+  </div>
+  </form>
+</div>
+</div>
+</div>
+
+<div class="container">
+<div class="panel panel-info">
+    <div class="panel-heading">
+        
+      <div class="row">
+        <div class="col-md-8">
+            <h4>Elenco Servizi Preventivi</h4>
+        </div>
+        <div class="col-md-4">
+            <button type="button" 
+                    title="Crea un nuovo preventivo di servizio"
+                    ng-click="newRelazioni()"
+                    class="btn btn-info pull-right">Nuovo Preventivo di Servizio</button>
+        </div>
+      </div>
+        
+    </div>
+    <div class="panel-body">
+
+
+<table class="table table-hover" id="dev-table">    
+    <thead>
+	   <tr>
+		  <th>#id</th>
+		  <th class="hidden-xs hidden-sm">Associazione</th>
+		  <th>Volontari</th>
+		  <th>Data</th>
+          <th>Località</th>
+          <th>Motivazioni</th>
+          <th>Rel.</th>
+		</tr>
+	</thead>
+    <tbody>
+        <tr ng-repeat='item in items'
+            ng-class="{'danger' : item.annullato_servizi == 1 }"
+            
+            >
+            
+          
+          <td><a ng-click="editItem(item.id)">{{item.id}}</a></td>
+          <td class="hidden-xs hidden-sm">{{item.nome_breve_utenti}}</td>
+          <td>{{item.elenco_volontari}} </td>
+          <td>{{item.data_servizi | date:'dd/MM/yyyy' }} <br/> dalle {{item.da_ora_servizi | date:'HH:mm' }}  alle {{item.a_ora_servizi | date:'HH:mm' }}</td>
+          <td>{{item.note_servizi }}</td>
+          <td>{{item.rapporto_servizi  }}</td>
+          <td><button ng-show="item.id_rapporto_valido_servizio" class="btn btn-success" 
+                      data-toggle="tooltip" data-placement="top" title="Visualizza la relazione corrispodente"
+                      ng-click="editRelazioni(item.id_rapporto_valido_servizio)">{{item.id_rapporto_valido_servizio}} ({{item.elenco_id_rapporti_servizio  }})</button>
+            </td>
+            
+        </tr>
+  </tbody>
+</table>
+
+<div ng-show="totalItems == 0">
+  <h3>Nessun dato trovato, cambiare i dati di ricerca.</h3>
+</div>
+        
+
+   
+        <pagination 
+            ng-model="currentPage" 
+            total-items="totalItems" 
+            boundary-links="true"
+            max-size="10"
+            rotate="false"
+            items-per-page="pageSize"
+            ng-change="selectPage()">
+        </pagination>
+        
+      </div> <!-- panel body -->
+</div> <!-- panel panel panel-primary  -->
+</div>  <!-- container  -->
+
+        
