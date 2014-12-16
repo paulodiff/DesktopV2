@@ -27,7 +27,7 @@ angular.module('myApp.controllers')
     $scope.openedPopupDate = false;   
     
     if (( configAction == 'edit') || ( configAction == 'view'))  {
-        console.log('EditItemCtrl : get data from serviziAll');
+        console.log('###EditItemCtrl : getList data from serviziAll');
         var baseAccounts = Restangular.all('serviziAll');
         // This will query /accounts and return a promise.
         baseAccounts.getList({limit: 50, id_servizi_selezione : $stateParams.id}).then(function(accounts) {
@@ -62,7 +62,7 @@ angular.module('myApp.controllers')
                   //##check null data
             if ( (!(typeof $scope.item.id_utenti === "undefined")) && ($scope.item.id_utenti != null)) {
                         
-            console.log('EditItemCtrl : populate volontariList per : ' + $scope.item.id_utenti);
+            console.log('###EditItemCtrl : get volontariAll populate volontariList per : ' + $scope.item.id_utenti);
             var volontariList = Restangular.all('volontariAll');
             volontariList.getList({id_volontari_utenti : $scope.item.id_utenti }).then(function(users) {
                     
@@ -83,7 +83,7 @@ angular.module('myApp.controllers')
                             nome_completo_volontari : users[i].nome_completo_volontari,
                             text : users[i].nome_completo_volontari
                         };
-                console.log(more);
+                //console.log(more);
                 fancyArray.push(more);
                 }
                 //Do something
@@ -169,6 +169,11 @@ angular.module('myApp.controllers')
     //Button action
     $scope.cancel_action = function(item){
         
+        
+        console.log('cancel_action');
+        console.log(item);
+        
+        
         modalService.showModal({}, {
                 type: 1,
                 closeButtonText: 'Indietro',
@@ -178,24 +183,24 @@ angular.module('myApp.controllers')
                         }).then(
                     function (result) {
                         console.log('EditItemCtrl : Deleting....');
-                        console.log(item.id_servizi);
+                        console.log(item.id);
                         
                         //var baseAccounts = Restangular.all('servizi');
                         // This will query /accounts and return a promise.
                         //baseAccounts.getList({limit: 50, id_servizi_selezione : $stateParams.id}).then(function(accounts) {
                         //var account = Restangular.one("servizi", item.id_servizi).get();   
 
-                        Restangular.oneUrl('servizi', '/api1/servizi/' + item.id ).get().then(
+                        Restangular.oneUrl('servizi', ENV.apiEndpoint + '/api1/servizi/' + item.id ).get().then(
                             function(account){
                                 console.log('get!');
                                 console.log(account);
                                 account.annullato_servizi = 1;
                                 console.log('put!');
                                 //Restangular.setBaseUrl('/api1/servizi/' + item.id_servizi);
-                                Restangular.setBaseUrl('/api1');
+                                Restangular.setBaseUrl(ENV.apiEndpoint + '/api1');
                                 account.customPUT({annullato_servizi : 1},item.id, {}, {});
                                 //account.put();
-                                Restangular.setBaseUrl('/apiQ');
+                                Restangular.setBaseUrl(ENV.apiEndpoint + '/apiQ');
                                 $state.go('list');
                               });
                         /*
@@ -264,6 +269,15 @@ angular.module('myApp.controllers')
             
             console.log('validate OK ... saving data ...');
         
+            
+            // LISTA VOLONTARI deve essere un array di interi
+            // lista_volontari: [ '1294', '1296', '1300' ],
+            
+            console.log('check $scope.item.lista_volontari_servizi');
+            console.log($scope.item.lista_volontari_servizi);
+            
+            
+            
             var new_servizio = {
                 //id_volontari_servizi :  $scope.item.id_volontari_servizi,
                 id_utenti : $scope.item.id_utenti,
@@ -271,9 +285,19 @@ angular.module('myApp.controllers')
                 da_ora_servizi : $scope.item.da_ora_servizi,
                 a_ora_servizi : $scope.item.a_ora_servizi,
                 note_servizi : $scope.item.note_servizi,
-                lista_volontari : $scope.item.lista_volontari_servizi,
+                //lista_volontari : $scope.item.lista_volontari_servizi,
+                lista_volontari : [],
                 rapporto_servizi :  $scope.item.rapporto_servizi
             };
+            
+             _.forEach($scope.item.lista_volontari_servizi, function(servizio) {
+                console.log(servizio); // This is not an order!
+                new_servizio.lista_volontari.push(servizio.id);
+            });
+
+            
+            console.log('lista_volontari:');
+            console.log(new_servizio.lista_volontari);
             
             console.log('POST ... ' + new_servizio);
             console.log('api endpoint : ' +  ENV.apiEndpoint + '/api1/servizi');
@@ -407,7 +431,8 @@ angular.module('myApp.controllers')
     // popola la lista utenti
     var volontariList = Restangular.all('utentiAll');
     volontariList.getList().then(function(accounts) {
-        console.log(accounts);
+        //console.log(accounts);
+        console.log('## get lista utentiAll');
         if(Session.isAdmin) {
             console.log('InfiniteCtrl : populate list : isAdmin ');
             $scope.utentiList = accounts;
@@ -436,7 +461,7 @@ angular.module('myApp.controllers')
       $scope.filterCriteria.count = 1;
       serviziList.getList($scope.filterCriteria).then(function(data) {
             console.log('COUNT: data[0].totalItems:' + data[0].totalItems);
-            console.log(data);
+            //console.log(data);
           
             if (data.length > 0) {
                 $scope.totalItems = data[0].totalItems;
@@ -444,12 +469,8 @@ angular.module('myApp.controllers')
                 $scope.totalItems = 0;
             }
             //$scope.totalPages = data[0].totalItems;
-        }, function () {
-            $scope.totalItems = 0;
-            //$scope.totalPages = 0;
-        });
-
-      console.log('InfiniteCtrl...fetchResult - get data');
+      
+          console.log('InfiniteCtrl...fetchResult - get data');
       
       var offset_page =  ( $scope.currentPage - 1 ) * $scope.pageSize;
       $scope.filterCriteria.count = 0;
@@ -460,6 +481,12 @@ angular.module('myApp.controllers')
         }, function () {
             $scope.items = [];
         });
+          
+        }, function () {
+            $scope.totalItems = 0;
+            //$scope.totalPages = 0;
+        });
+
     };
       
  
@@ -633,7 +660,6 @@ angular.module('myApp.controllers')
                 actionButtonText: 'Ok',
                 headerText: 'Versione EXCEL della stampa (provvisorio)',
                 bodyText: 'Cliccare per scaricare la versione EXCEL:'  + Session.nome_file + '<a href="">Clicca qui</a>'
-                
                         }).then(
                     function (result) {
                         console.log('ok');

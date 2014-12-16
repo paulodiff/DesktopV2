@@ -1,5 +1,17 @@
 README
 
+
+Cartelle per lo sviluppo
+--------------------------------------------------------------
+d:\tmp001\SENCHA\DesktopV2
+
+start mysql
+d:\tmp001\SENCHA\MobileV\nodejs\ node server.js
+
+
+
+
+
 yo ionic AppName
 
 install grunt module win-spawn

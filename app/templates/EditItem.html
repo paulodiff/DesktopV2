@@ -57,11 +57,13 @@
 <div class="form-group">
     <label class="col-sm-2 control-label" for="textinput">Dalle ore</label>
     <div class="col-sm-2">
-        <input type="time"  class="col-sm-2  form-control" id="exampleInput" name="input" ng-model="item.da_ora_servizi"   ng-change="timechanged()"  placeholder="HH:mm" min="00:00" max="23:30" required novalidate ng-disabled="configAction == 'edit'"/>
+        <!-- <input type="time"  class="col-sm-2  form-control" id="exampleInput" name="input" ng-model="item.da_ora_servizi"   ng-change="timechanged()"  placeholder="HH:mm" min="00:00" max="23:30" required novalidate ng-disabled="configAction == 'edit'"/> -->
+        <timepicker ng-model="item.da_ora_servizi" ng-change="timechanged()" show-meridian="ismeridian" ng-disabled="configAction == 'edit'"></timepicker>
     </div>
     <label class="col-sm-2 control-label" for="textinput">alle ore</label>
     <div class="col-sm-2">
-        <input type="time"  class="col-sm-2  form-control" id="exampleInput" name="input" ng-model="item.a_ora_servizi"  ng-change="timechanged()"  placeholder="HH:mm" min="00:00" max="23:30" required novalidate ng-disabled="configAction == 'edit'" />
+        <!-- <input type="time"  class="col-sm-2  form-control" id="exampleInput" name="input" ng-model="item.a_ora_servizi"  ng-change="timechanged()"  placeholder="HH:mm" min="00:00" max="23:30" required novalidate ng-disabled="configAction == 'edit'" /> -->
+        <timepicker ng-model="item.a_ora_servizi" ng-change="timechanged()" show-meridian="ismeridian"></timepicker>
     </div>
     <label class="col-sm-1 control-label">{{timeCalculated}}</label>
 </div>
@@ -80,6 +82,20 @@
   </div>
 </div>
 
+    <div class="well well-sm">
+    <button ng-show="configAction == 'new'" id="salvabutton"  ng-click="save_action(item)"   name="singlebutton" class="btn btn-primary">Salva Elemento</button>
+    <button ng-show="(configAction == 'edit') && (id_rapporto_valido_servizio == null) && (item.annullato_servizi == 0)" id="cancelbutton" ng-click="cancel_action(item)" name="button2id"    class="btn btn-danger">Annulla Elemento</button>
+    <button ng-show="(configAction == 'edit') && (id_rapporto_valido_servizio != null) && (item.annullato_servizi == 0)" id="cancelbutton" ng-click="goto_relazione_action(id_rapporto_valido_servizio)" name="button2id"    class="btn btn-success">Vai alla Relazione n. {{id_rapporto_valido_servizio}}</button>
+    <button ng-show="(configAction == 'edit') && (id_rapporto_valido_servizio == null) && (item.annullato_servizi == 0)" id="rapportobutton" ng-click="new_relazione_action(item.id)" name="button3id"    class="btn btn-success">Crea nuova Relazione di Servizio</button>
+    <button ng-show="(item.annullato_servizi == 1)" id="cancelbutton" name="button2id"    class="btn btn-danger">Elemento ANNULLATO - nessuna operazione possibile</button>
+
+    
+    </div>
+
+
+        
+</div> <!-- panel body -->
+<div class="panel-footer">
 <!-- Button (Double) -->
 <div class="form-group">
   <label class="col-sm-2 control-label" for="button1id">Azioni</label>
@@ -92,16 +108,13 @@
   </div>
 </div>
     
-
+</div><!-- Panel footer -->
+    
 </fieldset>
     
   <!-- <pre>form = {{item | json}}</pre>  -->
   <!-- <pre>master = {{master | json}}</pre>  -->
   <!-- <pre>timeCalculated = {{ timeCalculated| json}}</pre>  -->
 </form>
-
-        
-</div> <!-- panel body -->
-    
 </div>
 </div>
